@@ -4,7 +4,7 @@ An API mocking library for iOS.
 
 ## Getting started
 
-1. Drag `build/DDMockiOS/` into project root folder
+1. Drag `output/DDMockiOS/` into project root folder
 
 2. Add run script to target build phase
 
@@ -21,6 +21,14 @@ let configuration = URLSessionConfiguration.default
 // other configuration set up
 DDMockProtocol.initialise(config: configuration)
 ```
+
+## Building from scratch
+
+1. Run `sh frameworkMerge.sh DDMockiOS`
+
+2. FAT framework should be added in `output/DDMockiOS`
+
+3. Follow Getting Started steps
 
 ## Mock API files
 

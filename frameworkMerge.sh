@@ -21,25 +21,25 @@ xcodebuild -target "${FRAMEWORK_NAME}" -configuration Release -arch arm64 -arch 
 xcodebuild -target "${FRAMEWORK_NAME}" -configuration Release -arch x86_64 -arch i386 only_active_arch=no defines_module=yes -sdk "iphonesimulator"
 
 echo "Step 5"
-# Remove .framework file if exists on Desktop from previous run.
-if [ -d "${HOME}/Desktop/${FRAMEWORK_NAME}.framework" ]; then
-rm -rf "${HOME}/Desktop/${FRAMEWORK_NAME}.framework"
+# Remove .framework file if exists in output from previous run.
+if [ -d "output/DDMockiOS/${FRAMEWORK_NAME}.framework" ]; then
+rm -rf "output/DDMockiOS/${FRAMEWORK_NAME}.framework"
 fi
 
 echo "Step 6"
-# Copy the device version of framework to Desktop.
-cp -r "build/Release-iphoneos/${FRAMEWORK_NAME}.framework" "${HOME}/Desktop/${FRAMEWORK_NAME}.framework"
+# Copy the device version of framework to output.
+cp -r "build/Release-iphoneos/${FRAMEWORK_NAME}.framework" "output/DDMockiOS/${FRAMEWORK_NAME}.framework"
 
 echo "Step 7"
 # Replace the framework executable within the framework with
 # a new version created by merging the device and simulator
 # frameworks' executables with lipo.
-lipo -create -output "${HOME}/Desktop/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}" "build/Release-iphoneos/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}" "build/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}"
+lipo -create -output "output/DDMockiOS/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}" "build/Release-iphoneos/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}" "build/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}"
 
 echo "Step 8"
 # Copy the Swift module mappings for the simulator into the
 # framework.  The device mappings already exist from step 6.
-cp -r "build/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule/" "${HOME}/Desktop/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule"
+cp -r "build/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule/" "output/DDMockiOS/${FRAMEWORK_NAME}.framework/Modules/${FRAMEWORK_NAME}.swiftmodule"
 
 echo "Step 9"
 # Delete the most recent build.
