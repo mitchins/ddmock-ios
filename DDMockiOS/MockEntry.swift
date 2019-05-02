@@ -1,11 +1,14 @@
 import Foundation
 
 struct MockEntry: Codable {
+    internal static let defaultResponseTime = 400
+    internal static let defaultStatusCode = 200
+    
     let path: String
     var files = [String]()
     var selectedFile = 0
-    private var statusCode = 200
-    var responseTime = 400 as Int64
+    private var statusCode = defaultStatusCode
+    var responseTime = defaultResponseTime
     
     init(path: String, files: [String]) {
         self.path = path
