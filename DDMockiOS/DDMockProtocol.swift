@@ -21,7 +21,7 @@ public class DDMockProtocol: URLProtocol {
     
     override public func startLoading() {
         // fetch item
-        if let path = self.request.url?.path,
+        if let path = self.request.url?.path.split(separator: "?")[0].description,
             let method = self.request.httpMethod {
             if let entry = DDMock.shared.getMockEntry(path: path, method: method) {
                 // create mock response
