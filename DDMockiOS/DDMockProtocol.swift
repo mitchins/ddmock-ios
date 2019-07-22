@@ -33,6 +33,9 @@ public class DDMockProtocol: URLProtocol {
                 }
                 let response = HTTPURLResponse(url: self.request.url!, statusCode: entry.getStatusCode(), httpVersion: "HTTP/1.1", headerFields: headers)!
                 
+                // Simulate response time
+                sleep(UInt32(entry.responseTime))
+                
                 // send response
                 self.client!.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
                 
