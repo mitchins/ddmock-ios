@@ -35,11 +35,11 @@ DDMockProtocol.initialise(config: configuration)
 ## Mock API files
 
 * All API mock files must be stored under a directory called __/mockfiles__.
-* The  __/mockfiles__ must be a folder reference and not a group.
+* The  __/mockfiles__ must be a folder reference and not a group and stored under the __Resources__ folder
 * All API mock files are mapped based on the __endpoint path__ and __HTTP method__.
 * e.g. login mock response file for endpoint __POST__ BASE_URL/__mobile-api/v1/auth/login__ should be stored under __mobile-api/v1/auth/login/post__
-* For dynamic endpoint url, create directories with __{__ and __}__ for every replacement blocks and parameters
-* e.g. mock files for __GET__ BASE_URL/__mobile-api/v1/users/{usersId}__ should be stored under __mobile-api/v1/users/{usersId}/get__
+* For dynamic endpoint url, create directories with __\___ and __\___ for every replacement blocks and parameters
+* e.g. mock files for __GET__ BASE_URL/__mobile-api/v1/users/\_usersId\___ should be stored under __mobile-api/v1/users/{usersId}/get__
 * see `sample`
 * All mock files need to be JSON files
 * There can be more than one mock file stored under each endpoint path
