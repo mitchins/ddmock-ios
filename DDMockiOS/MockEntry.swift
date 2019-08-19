@@ -22,4 +22,12 @@ struct MockEntry: Codable {
     func getStatusCode() -> Int {
         return DDMockSettingsBundleHelper.getStatusCode(key: path)
     }
+    
+    func useRealAPI() -> Bool {
+        return DDMockSettingsBundleHelper.useRealAPI(key: path)
+    }
+    
+    func getResponseTime() -> Int {
+        return DDMockSettingsBundleHelper.getResponseTime(key: path)
+    }
 }

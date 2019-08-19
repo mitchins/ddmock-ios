@@ -12,7 +12,10 @@ public class DDMockProtocol: URLProtocol {
     }
     
     override public class func canInit(with request: URLRequest) -> Bool {
-        return DDMock.shared.getMockEntry(request: request) != nil
+        if let entry = DDMock.shared.getMockEntry(request: request) {
+            return !entry.useRealAPI() // Use mock if mock response exists and not set to use real API
+        }
+        return false
     }
     
     override public class func canonicalRequest(for request: URLRequest) -> URLRequest {
@@ -21,7 +24,7 @@ public class DDMockProtocol: URLProtocol {
     
     override public func startLoading() {
         // fetch item
-        if let path = self.request.url?.path.split(separator: "?")[0].description,
+        if let path = self.request.url?.path,
             let method = self.request.httpMethod {
             if let entry = DDMock.shared.getMockEntry(path: path, method: method) {
                 // create mock response
@@ -34,7 +37,7 @@ public class DDMockProtocol: URLProtocol {
                 let response = HTTPURLResponse(url: self.request.url!, statusCode: entry.getStatusCode(), httpVersion: "HTTP/1.1", headerFields: headers)!
                 
                 // Simulate response time
-                sleep(UInt32(entry.responseTime / 1000))
+                Thread.sleep(forTimeInterval: TimeInterval(entry.getResponseTime() / 1000))
                 
                 // send response
                 self.client!.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
