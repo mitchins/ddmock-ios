@@ -67,7 +67,7 @@ public class DDMock {
                 }
             }
         }
-        guard matches.count < 1 else {
+        guard matches.count <= 1 else {
             fatalError("Multiple matches is bad. FIX THIS!")
         }
         return matches.first
