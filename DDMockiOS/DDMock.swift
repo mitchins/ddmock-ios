@@ -19,7 +19,11 @@ public class DDMock {
         let docsPath = Bundle.main.resourcePath! + mockDirectory
         let fileManager = FileManager.default
         
-        fileManager.enumerator(atPath: docsPath)?.forEach({ (e) in
+        fileManager.enumerator(atPath: docsPath)?
+            .sorted(by: { (lhs, rhs) -> Bool in
+                guard let lhs = lhs as? String, let rhs = rhs as? String else { return true }
+                return lhs < rhs
+            }).forEach({ (e) in
             if let e = e as? String, let url = URL(string: e) {
                 if (url.pathExtension == jsonExtension) {
                     createMockEntry(url: url)
